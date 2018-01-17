@@ -1,289 +1,249 @@
 <template>
-    <div class="page page-index">
-        <header class="layout-header navbar navbar-light">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse"
-                            data-target="#navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">二维码</a>
-                </div>
-                <div id="navbar-collapse" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav" id="menu-layoutit">
-                        <!--<li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                                文件 <i class="caret"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a id="new" href="#">新建</a></li>
-                                <li><a id="save" href="#">保存</a></li>
-                                <li><a id="download" href="#">下载</a></li>
-                            </ul>
-                        </li>-->
-                        <!--<li class="nav-item">
-                            <a class="nav-link" href="/qrcode" target="_blank">首页</a>
-                        </li>-->
-                        <li class="nav-item navbar-form">
-                            <button id="download" class="btn btn-info" href="#">下载</button>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav pull-right">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/qrcode/game" target="_blank" style="color: #f00">二维码小游戏</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/plugin/qrcode" target="_blank" style="color: #f00">浏览器插件</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/" target="_blank">更多工具</a>
-                        </li>
-                    </ul>
-
-                </div>
+    <my-page title="二维码">
+        <!--<header class="layout-header navbar navbar-light">-->
+            <!--<div class="container">-->
+                            <!--<a class="nav-link" href="/qrcode" target="_blank">首页</a>-->
+                            <!--<button id="download" class="btn btn-info" href="#">下载</button>-->
+                            <!--<a class="nav-link" href="/qrcode/game" target="_blank" style="color: #f00">二维码小游戏</a>-->
+                            <!--<a class="nav-link" href="/plugin/qrcode" target="_blank" style="color: #f00">浏览器插件</a>-->
+        <!--</header>-->
+        <div class="qrcode-box">
+            <div id="qrcode" class="qrcode">
+                <canvas id="canvas" width="500" height="500"></canvas>
+                <canvas id="canvas2" width="500" height="500"></canvas>
             </div>
-        </header>
-        <div class="layout-body">
-            <div class="qrcode-box">
-                <div id="qrcode" class="qrcode">
-                    <canvas id="canvas" width="500" height="500"></canvas>
-                    <canvas id="canvas2" width="500" height="500"></canvas>
-                </div>
-            </div>
-            <div class="edit-tool">
-                <ul id="tool-tab" class="nav nav-tabs">
-                    <div class="nav-item active"><a class="nav-link" href="#tab10" data-toggle="tab">内容</a></div>
-                    <div class="nav-item"><a class="nav-link" href="#tab11" data-toggle="tab">基本</a></div>
-                    <div class="nav-item"><a class="nav-link" href="#tab12" data-toggle="tab">样式</a></div>
-                    <div class="nav-item"><a class="nav-link" href="#tab13" data-toggle="tab">图标</a></div>
-                    <div class="nav-item"><a class="nav-link" href="#tab14" data-toggle="tab">码眼</a></div>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab10" class="tab-pane fade active in">
+        </div>
+        <div class="edit-tool">
+            <ul id="tool-tab" class="nav nav-tabs">
+                <div class="nav-item active"><a class="nav-link" href="#tab10" data-toggle="tab">内容</a></div>
+                <div class="nav-item"><a class="nav-link" href="#tab11" data-toggle="tab">基本</a></div>
+                <div class="nav-item"><a class="nav-link" href="#tab12" data-toggle="tab">样式</a></div>
+                <div class="nav-item"><a class="nav-link" href="#tab13" data-toggle="tab">图标</a></div>
+                <div class="nav-item"><a class="nav-link" href="#tab14" data-toggle="tab">码眼</a></div>
+            </ul>
+            <div class="tab-content">
+                <div id="tab10" class="tab-pane fade active in">
 
-                        <div id="editor-text-edit2" class="editor-box editor-text-ediotr-box">
-                            <ul id="sub-tab" class="nav nav-tabs">
-                                <div class="nav-item active"><a class="nav-link" href="#tab20" data-toggle="tab">网址</a></div>
-                                <div class="nav-item"><a class="nav-link" href="#tab21" data-toggle="tab">WiFi</a></div>
-                                <div class="nav-item"><a class="nav-link" href="#tab22" data-toggle="tab">名片</a></div>
-                                <div class="nav-item"><a class="nav-link" href="#tab23" data-toggle="tab">电话</a></div>
-                            </ul>
-                            <div class="tab-content sub-tab-content">
-                                <div id="tab20" class="tab-pane fade active in">
-                                    <div class="form-horizontal">
-                                        <div class="form-groups">
-                                            <div class="form-group">
-                                                <label class="control-label">网址</label>
-                                                <textarea id="text" class="form-control" placeholder="支持文本、网址和电子邮箱">http://tool.yunser.com/</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="tab21" class="tab-pane fade">
-                                    <div class="form-horizontal">
-                                        <div class="form-groups">
-                                            <div class="form-group">
-                                                <label class="control-label">WiFi账号</label>
-                                                <textarea id="wifi-account" class="form-control" placeholder="接入点SSID"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">密码</label>
-                                                <input id="wifi-pwd" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">加密类型</label>
-                                                <select id="wifi-type" class="form-control">
-                                                    <option value="WPA">WPA/WPA2</option>
-                                                    <option value="WEP">WEP</option>
-                                                    <option value="nopass">无加密</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="tab22" class="tab-pane fade">
-                                    <div class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="control-label">姓名</label>
-                                            <input id="card-name" class="form-control" type="text">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">电话</label>
-                                            <input id="card-tel" class="form-control" type="text">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">电子邮箱</label>
-                                            <input id="card-email" class="form-control" type="text">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">地址</label>
-                                            <input id="card-address" class="form-control" type="text" value="">
-                                        </div>
+                    <div id="editor-text-edit2" class="editor-box editor-text-ediotr-box">
+                        <ul id="sub-tab" class="nav nav-tabs">
+                            <div class="nav-item active"><a class="nav-link" href="#tab20" data-toggle="tab">网址</a></div>
+                            <div class="nav-item"><a class="nav-link" href="#tab21" data-toggle="tab">WiFi</a></div>
+                            <div class="nav-item"><a class="nav-link" href="#tab22" data-toggle="tab">名片</a></div>
+                            <div class="nav-item"><a class="nav-link" href="#tab23" data-toggle="tab">电话</a></div>
+                        </ul>
+                        <div class="tab-content sub-tab-content">
+                            <div id="tab20" class="tab-pane fade active in">
+                                <div class="form-horizontal">
+                                    <div class="form-groups">
                                         <div class="form-group">
                                             <label class="control-label">网址</label>
-                                            <input id="card-site" class="form-control" type="text" value="http://">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label">单位</label>
-                                            <input id="card-org" class="form-control" type="text" value="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">职位</label>
-                                            <input id="card-til" class="form-control" type="text" value="">
-                                        </div>
-                                        <!--<div class="form-group">
-                                            <label class="control-label">QQ</label>
-                                            <input id="card-qq" class="form-control" type="text">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">备注</label>
-                                            <input id="card-note" class="form-control" type="text" value="">
-                                        </div>-->
-                                    </div>
-                                </div>
-                                <div id="tab23" class="tab-pane fade">
-                                    <div class="form-horizontal">
-                                        <div class="form-groups">
-                                            <div class="form-group">
-                                                <label class="control-label">手机号码</label>
-                                                <input id="tel-phone" class="form-control" type="text">
-                                            </div>
+                                            <textarea id="text" class="form-control" placeholder="支持文本、网址和电子邮箱">http://tool.yunser.com/</textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div id="tab21" class="tab-pane fade">
+                                <div class="form-horizontal">
+                                    <div class="form-groups">
+                                        <div class="form-group">
+                                            <label class="control-label">WiFi账号</label>
+                                            <textarea id="wifi-account" class="form-control" placeholder="接入点SSID"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">密码</label>
+                                            <input id="wifi-pwd" class="form-control" type="text">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">加密类型</label>
+                                            <select id="wifi-type" class="form-control">
+                                                <option value="WPA">WPA/WPA2</option>
+                                                <option value="WEP">WEP</option>
+                                                <option value="nopass">无加密</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab22" class="tab-pane fade">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label">姓名</label>
+                                        <input id="card-name" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">电话</label>
+                                        <input id="card-tel" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">电子邮箱</label>
+                                        <input id="card-email" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">地址</label>
+                                        <input id="card-address" class="form-control" type="text" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">网址</label>
+                                        <input id="card-site" class="form-control" type="text" value="http://">
+                                    </div>
 
-
-                        </div>
-                    </div>
-                    <div id="tab11" class="tab-pane fade">
-                        <div class="form-horizontal">
-                            <div id="editor-text-edit2" class="editor-box editor-text-ediotr-box">
-                                <div class="form-groups">
-                                    <h4 class="title">基本设置</h4>
                                     <div class="form-group">
-                                        <label class="control-label"></label>
+                                        <label class="control-label">单位</label>
+                                        <input id="card-org" class="form-control" type="text" value="">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">大小</label>
-                                        <div id="size"></div>
+                                        <label class="control-label">职位</label>
+                                        <input id="card-til" class="form-control" type="text" value="">
+                                    </div>
+                                    <!--<div class="form-group">
+                                        <label class="control-label">QQ</label>
+                                        <input id="card-qq" class="form-control" type="text">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">容错</label>
-                                        <!--<div id="quality"></div>-->
-                                        <select id="editor-quality" class="form-control">
-                                            <option value="0">最低</option>
-                                            <option value="1">低</option>
-                                            <option value="2">中</option>
-                                            <option value="3" selected>高</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">边距</label>
-                                        <div id="padding"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">旋转</label>
-                                        <div id="angle"></div>
+                                        <label class="control-label">备注</label>
+                                        <input id="card-note" class="form-control" type="text" value="">
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div id="tab23" class="tab-pane fade">
+                                <div class="form-horizontal">
+                                    <div class="form-groups">
+                                        <div class="form-group">
+                                            <label class="control-label">手机号码</label>
+                                            <input id="tel-phone" class="form-control" type="text">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
-                    <div id="tab12" class="tab-pane fade">
-                        <div class="form-horizontal">
+                </div>
+                <div id="tab11" class="tab-pane fade">
+                    <div class="form-horizontal">
+                        <div id="editor-text-edit2" class="editor-box editor-text-ediotr-box">
                             <div class="form-groups">
-                                <h4 class="title">填充</h4>
+                                <h4 class="title">基本设置</h4>
                                 <div class="form-group">
-                                    <label class="control-label">样式</label>
-                                    <select id="type" class="form-control">
-                                        <option value="0" selected>直角</option>
-                                        <option value="1">圆圈</option>
-                                        <option value="2">液化</option>
+                                    <label class="control-label"></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">大小</label>
+                                    <div id="size"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">容错</label>
+                                    <!--<div id="quality"></div>-->
+                                    <select id="editor-quality" class="form-control">
+                                        <option value="0">最低</option>
+                                        <option value="1">低</option>
+                                        <option value="2">中</option>
+                                        <option value="3" selected>高</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">颜色</label>
-                                    <input id="color" class="form-control">
+                                    <label class="control-label">边距</label>
+                                    <div id="padding"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">渐变</label>
-                                    <label class="checkbox-inline"><input id="gradient" type="checkbox">开启</label>
+                                    <label class="control-label">旋转</label>
+                                    <div id="angle"></div>
                                 </div>
-                                <div id="gradient-box" class="gradient-box">
-                                    <div class="form-group">
-                                        <label class="control-label">渐变方式</label>
-                                        <div class="form-control-static">线性渐变</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">颜色1</label>
-                                        <input id="gradient-color1" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">颜色2</label>
-                                        <input id="gradient-color2" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-groups">
-                                <h4 class="title">背景</h4>
-                                <div class="form-group">
-                                    <label class="control-label">背景色</label>
-                                    <input id="bg-color" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">背景图片</label>
-                                    <button id="upload-bg" class="btn btn-default" type="button">上传</button>
-                                </div>
-                            </div>
-                            <div class="form-groups">
-                                <h4 class="title">模板</h4>
-                                <ul id="style-list" class="style-list">
-                                    <li class="style-item"></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div id="tab13" class="tab-pane fade">
-                        <ul id="index-list" class="index-list">
-                            <div class="form-horizontal">
-                                <div class="form-groups">
-                                    <h4 class="title">图标</h4>
-                                    <div class="form-group">
-                                        <label class="control-label">图标</label>
-                                        <button id="icon" class="btn btn-primary" type="button">常用图标</button>
-                                        <button id="upload" class="btn btn-primary" type="button">上传</button>
-                                    </div>
+                </div>
+                <div id="tab12" class="tab-pane fade">
+                    <div class="form-horizontal">
+                        <div class="form-groups">
+                            <h4 class="title">填充</h4>
+                            <div class="form-group">
+                                <label class="control-label">样式</label>
+                                <select id="type" class="form-control">
+                                    <option value="0" selected>直角</option>
+                                    <option value="1">圆圈</option>
+                                    <option value="2">液化</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">颜色</label>
+                                <input id="color" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">渐变</label>
+                                <label class="checkbox-inline"><input id="gradient" type="checkbox">开启</label>
+                            </div>
+                            <div id="gradient-box" class="gradient-box">
+                                <div class="form-group">
+                                    <label class="control-label">渐变方式</label>
+                                    <div class="form-control-static">线性渐变</div>
                                 </div>
-                                <div class="form-groups">
-                                    <h4 class="title">图标样式</h4>
-                                    <div class="form-group">
-                                        <label class="control-label">描边</label>
-                                        <input id="stroke" class="form-control" type="number" value="0" min="0">
-                                    </div>
+                                <div class="form-group">
+                                    <label class="control-label">颜色1</label>
+                                    <input id="gradient-color1" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">颜色2</label>
+                                    <input id="gradient-color2" class="form-control">
                                 </div>
                             </div>
-                        </ul>
+                        </div>
+                        <div class="form-groups">
+                            <h4 class="title">背景</h4>
+                            <div class="form-group">
+                                <label class="control-label">背景色</label>
+                                <input id="bg-color" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">背景图片</label>
+                                <button id="upload-bg" class="btn btn-default" type="button">上传</button>
+                            </div>
+                        </div>
+                        <div class="form-groups">
+                            <h4 class="title">模板</h4>
+                            <ul id="style-list" class="style-list">
+                                <li class="style-item"></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div id="tab14" class="tab-pane fade">
+                </div>
+                <div id="tab13" class="tab-pane fade">
+                    <ul id="index-list" class="index-list">
                         <div class="form-horizontal">
                             <div class="form-groups">
-                                <h4 class="title">颜色</h4>
+                                <h4 class="title">图标</h4>
                                 <div class="form-group">
-                                    <label class="control-label">外框颜色</label>
-                                    <input id="editor-eye-out-color" class="form-control">
+                                    <label class="control-label">图标</label>
+                                    <button id="icon" class="btn btn-primary" type="button">常用图标</button>
+                                    <button id="upload" class="btn btn-primary" type="button">上传</button>
                                 </div>
+                            </div>
+                            <div class="form-groups">
+                                <h4 class="title">图标样式</h4>
                                 <div class="form-group">
-                                    <label class="control-label">内框颜色</label>
-                                    <input id="editor-eye-in-color" class="form-control">
+                                    <label class="control-label">描边</label>
+                                    <input id="stroke" class="form-control" type="number" value="0" min="0">
                                 </div>
                             </div>
                         </div>
-                    </div><!-- /.tab-pane -->
+                    </ul>
                 </div>
+                <div id="tab14" class="tab-pane fade">
+                    <div class="form-horizontal">
+                        <div class="form-groups">
+                            <h4 class="title">颜色</h4>
+                            <div class="form-group">
+                                <label class="control-label">外框颜色</label>
+                                <input id="editor-eye-out-color" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">内框颜色</label>
+                                <input id="editor-eye-in-color" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.tab-pane -->
             </div>
         </div>
         <ul id="icon-list" class="icon-list">
@@ -300,7 +260,7 @@
             <li><img src="/static/qrcode/img/weibo1.png"></li>
             <li><img src="/static/qrcode/img/weibo2.png"></li>
         </ul>
-    </div>
+    </my-page>
 </template>
 
 <script>
