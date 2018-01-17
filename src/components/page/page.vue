@@ -3,7 +3,10 @@
         <div slot="drawer">
             <ui-appbar title=""></ui-appbar>
             <ui-list @itemClick="toggle()">
-                <ui-list-item title="首页" to="/">
+                <ui-list-item title="二维码生成" to="/">
+                    <ui-icon value="home" slot="left" />
+                </ui-list-item>
+                <ui-list-item title="二维码识别" to="/recognition">
                     <ui-icon value="home" slot="left" />
                 </ui-list-item>
                 <ui-list-item title="浏览器插件" to="/extension">

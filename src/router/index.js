@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from '@/views/Home'
 import Extension from '@/views/Extension'
 import About from '@/views/About'
+import Recognition from '@/views/Recognition'
 
 Vue.use(Router)
 
@@ -15,6 +16,10 @@ let routes = [
     {
         path: '/extension',
         component: Extension
+    },
+    {
+        path: '/recognition',
+        component: Recognition
     },
     {
         path: '/about',
