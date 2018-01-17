@@ -7,7 +7,7 @@
                     <ui-icon value="home" slot="left" />
                 </ui-list-item>
                 <ui-list-item title="二维码识别" to="/recognition">
-                    <ui-icon value="home" slot="left" />
+                    <ui-icon value="remove_red_eye" slot="left" />
                 </ui-list-item>
                 <ui-list-item title="浏览器插件" to="/extension">
                     <ui-icon value="extension" slot="left" />

@@ -15,26 +15,11 @@
             </div>
             <div id="qrcode_content" class="alert success">二维码识别之后的内容显示在此处...</div>
         </div>
-
-        <ui-article>
-            <h2>工具介绍</h2>
-            <ul class="new_tools_list">
-                <li>本工具可以快捷的识别二维码图片中的文本内容，拖放图片到指定的位置，即可扫描出二维码中的信息，可以用于手机无法扫描或者害怕手机骚片中毒等情况。</li>
-                <li class="strong green">也许你需要一个更好用Chrome离线插件，
-                    。</li>
-            </ul>
-            <p>二维码可以印刷在报纸、杂志、广告、图书、包装等多种载体上，用户通过手机摄像头扫描二维码或输入二维码下面的号码快速便捷地浏览网页、下载图文、软件、音乐、视频、了解企业产品信息等。</p>
-            <p>手机扫描二维码很简单，只需用扫描二维码的APP对准二维码即可。一般下载的手机浏览器就自带了二维码识别。但是有时候我们需要电脑识别二维码，比如一个应用APP很大，有几百M，用手机扫描下载不方便，这个时候不妨使用电脑扫描二维码然后下载，然后导入手机，这就很方便了。</p>
-            <p>找到要扫描和识别的二维码图片，这里我就以百度的一个应用来示范。把这个二维码图片截图，保存下来。</p>
-            <p>然后将图片拖放到本工具的白色区域，即可识别出二维码中的内容，非常方便！同时可以防止因为手机乱扫描二维码导致被骗！</p>
-        </ui-article>
     </my-page>
 </template>
 
 <script>
-    import UiArticle from "../../../vue-template/node_modules/yunser-ui-vue/src/article/index";
     export default {
-        components: {UiArticle},
         data () {
             return {
             }
