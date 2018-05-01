@@ -1,5 +1,5 @@
 <template>
-    <my-page title="二维码">
+    <my-page title="二维码" :page="page">
         <!--<header class="layout-header navbar navbar-light">-->
             <!--<div class="container">-->
                             <!--<a class="nav-link" href="/qrcode" target="_blank">首页</a>-->
@@ -25,99 +25,107 @@
                 <div id="tab10" class="tab-pane fade active in">
 
                     <div id="editor-text-edit2" class="editor-box editor-text-ediotr-box">
-                        <ul id="sub-tab" class="nav nav-tabs">
-                            <div class="nav-item active"><a class="nav-link" href="#tab20" data-toggle="tab">网址</a></div>
-                            <div class="nav-item"><a class="nav-link" href="#tab21" data-toggle="tab">WiFi</a></div>
-                            <div class="nav-item"><a class="nav-link" href="#tab22" data-toggle="tab">名片</a></div>
-                            <div class="nav-item"><a class="nav-link" href="#tab23" data-toggle="tab">电话</a></div>
-                        </ul>
-                        <div class="tab-content sub-tab-content">
-                            <div id="tab20" class="tab-pane fade active in">
-                                <div class="form-horizontal">
-                                    <div class="form-groups">
-                                        <div class="form-group">
-                                            <label class="control-label">网址</label>
-                                            <textarea id="text" class="form-control" placeholder="支持文本、网址和电子邮箱">http://tool.yunser.com/</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="tab21" class="tab-pane fade">
-                                <div class="form-horizontal">
-                                    <div class="form-groups">
-                                        <div class="form-group">
-                                            <label class="control-label">WiFi账号</label>
-                                            <textarea id="wifi-account" class="form-control" placeholder="接入点SSID"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">密码</label>
-                                            <input id="wifi-pwd" class="form-control" type="text">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">加密类型</label>
-                                            <select id="wifi-type" class="form-control">
-                                                <option value="WPA">WPA/WPA2</option>
-                                                <option value="WEP">WEP</option>
-                                                <option value="nopass">无加密</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="tab22" class="tab-pane fade">
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="control-label">姓名</label>
-                                        <input id="card-name" class="form-control" type="text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">电话</label>
-                                        <input id="card-tel" class="form-control" type="text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">电子邮箱</label>
-                                        <input id="card-email" class="form-control" type="text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">地址</label>
-                                        <input id="card-address" class="form-control" type="text" value="">
-                                    </div>
+                        <ui-tabs class="tab-head" :value="activeTab" @change="handleTabChange">
+                            <ui-tab value="website" title="网址"/>
+                            <ui-tab value="wifi" title="WiFi"/>
+                            <ui-tab value="card" title="名片"/>
+                            <ui-tab value="phone" title="电话"/>
+                        </ui-tabs>
+                        <div v-if="activeTab === 'website'">
+                            <div class="form-horizontal">
+                                <div class="form-groups">
                                     <div class="form-group">
                                         <label class="control-label">网址</label>
-                                        <input id="card-site" class="form-control" type="text" value="http://">
+                                        <textarea v-model="input.text" class="form-control" placeholder="支持文本、网址和电子邮箱"></textarea>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label">单位</label>
-                                        <input id="card-org" class="form-control" type="text" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">职位</label>
-                                        <input id="card-til" class="form-control" type="text" value="">
-                                    </div>
-                                    <!--<div class="form-group">
-                                        <label class="control-label">QQ</label>
-                                        <input id="card-qq" class="form-control" type="text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">备注</label>
-                                        <input id="card-note" class="form-control" type="text" value="">
-                                    </div>-->
                                 </div>
                             </div>
-                            <div id="tab23" class="tab-pane fade">
-                                <div class="form-horizontal">
-                                    <div class="form-groups">
-                                        <div class="form-group">
-                                            <label class="control-label">手机号码</label>
-                                            <input id="tel-phone" class="form-control" type="text">
-                                        </div>
+                        </div>
+                        <div v-if="activeTab === 'wifi'">
+                            <div class="form-horizontal">
+                                <div class="form-groups">
+                                    <div class="form-group">
+                                        <label class="control-label">WiFi账号</label>
+                                        <textarea v-model="input.wifi.account" class="form-control" placeholder="接入点SSID"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">密码</label>
+                                        <input v-model="input.wifi.password" class="form-control" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">加密类型</label>
+                                        <select v-model="input.wifi.type" class="form-control">
+                                            <option value="WPA">WPA/WPA2</option>
+                                            <option value="WEP">WEP</option>
+                                            <option value="nopass">无加密</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="activeTab === 'card'">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label">姓名</label>
+                                    <input v-model="input.card.name" class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">电话</label>
+                                    <input v-model="input.card.phone" class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">电子邮箱</label>
+                                    <input v-model="input.card.email" class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">地址</label>
+                                    <input v-model="input.card.address" class="form-control" type="text" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">网址</label>
+                                    <input v-model="input.card.site" class="form-control" type="text" value="http://">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">单位</label>
+                                    <input v-model="input.card.org" class="form-control" type="text" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">职位</label>
+                                    <input v-model="input.card.job" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="activeTab === 'phone'">
+                            <div class="form-horizontal">
+                                <div class="form-groups">
+                                    <div class="form-group">
+                                        <label class="control-label">手机号码</label>
+                                        <input v-model="input.phone" class="form-control" type="text">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
+                        <!-- <ul id="sub-tab" class="nav nav-tabs">
+                            <div class="nav-item active"><a class="nav-link" href="#tab20" data-toggle="tab">网址</a></div>
+                            <div class="nav-item"><a class="nav-link" href="#tab21" data-toggle="tab">WiFi</a></div>
+                            <div class="nav-item"><a class="nav-link" href="#tab22" data-toggle="tab">名片</a></div>
+                            <div class="nav-item"><a class="nav-link" href="#tab23" data-toggle="tab">电话</a></div>
+                        </ul> -->
+                        <!-- <div class="tab-content sub-tab-content">
+                            <div id="tab20" class="tab-pane fade active in">
+                            </div>
+                            <div id="tab21" class="tab-pane fade">
+                                
+                            </div>
+                            <div id="tab22" class="tab-pane fade">
+                                
+                            </div>
+                            <div id="tab23" class="tab-pane fade">
+                                
+                            </div>
+                        </div> -->
                     </div>
                 </div>
                 <div id="tab11" class="tab-pane fade">
@@ -130,6 +138,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">大小</label>
+                                    <!-- <ui-slider class="demo-slider" v-model="value1"/> -->
                                     <div id="size"></div>
                                 </div>
                                 <div class="form-group">
@@ -215,15 +224,15 @@
                                 <h4 class="title">图标</h4>
                                 <div class="form-group">
                                     <label class="control-label">图标</label>
-                                    <button id="icon" class="btn btn-primary" type="button">常用图标</button>
-                                    <button id="upload" class="btn btn-primary" type="button">上传</button>
+                                    <ui-raised-button label="选择图标" @click="toggle" /> 
+                                    <ui-raised-button label="删除图标" @click="removeIcon" v-if="input.src" /> 
                                 </div>
                             </div>
-                            <div class="form-groups">
+                            <div class="form-groups" v-if="input.src">
                                 <h4 class="title">图标样式</h4>
                                 <div class="form-group">
                                     <label class="control-label">描边</label>
-                                    <input id="stroke" class="form-control" type="number" value="0" min="0">
+                                    <input v-model.number="input.stroke" class="form-control" type="number" value="0" min="0">
                                 </div>
                             </div>
                         </div>
@@ -246,132 +255,216 @@
                 </div><!-- /.tab-pane -->
             </div>
         </div>
-        <ul id="icon-list" class="icon-list">
-            <li><img src="/static/qrcode/img/qq.png"></li>
-            <li><img src="/static/qrcode/img/phone.png"></li>
-            <li><img src="/static/qrcode/img/sina.png"></li>
-            <li><img src="/static/qrcode/img/taobao.png"></li>
-            <li><img src="/static/qrcode/img/tencent-weibo.png"></li>
-            <li><img src="/static/qrcode/img/www.png"></li>
-            <li><img src="/static/qrcode/img/youtube.png"></li>
-            <li><img src="/static/qrcode/img/alipay.png"></li>
-            <li><img src="/static/qrcode/img/weixin1.png"></li>
-            <li><img src="/static/qrcode/img/weixin2.png"></li>
-            <li><img src="/static/qrcode/img/weibo1.png"></li>
-            <li><img src="/static/qrcode/img/weibo2.png"></li>
-        </ul>
+        <ui-drawer class="icon-box" right :open="open" :docked="false" @close="toggle()">
+            <ui-appbar title="选择图标">
+                <ui-icon-button icon="close" slot="left" @click="toggle" />
+                <ui-icon-button icon="file_upload" slot="right" @click="upload" title="上传本地图片" />
+                <ui-icon-button icon="all_inclusive" slot="right" @click="linkImage" title="从其他应用选择图片" />
+            </ui-appbar>
+            <div class="body">
+                <ul class="icon-list">
+                    <li v-for="icon in icons" @click="selectIcon(icon)">
+                        <img :src="icon">
+                    </li>
+                </ul>
+            </div>
+        </ui-drawer>
     </my-page>
 </template>
 
 <script>
+    import qrcodeRender from '../qrcode-render'
+    const Intent = window.Intent
+
+    /**
+     *
+     *  UTF-8 data encode / decode
+     *  http://www.webtoolkit.info/
+     *
+     **/
+    function utf8Encode(string) {
+        console.log(string)
+        string = string.replace(/\r\n/g,'\n')
+        var utftext = ''
+        for (var n = 0; n < string.length; n++) {
+            var c = string.charCodeAt(n)
+            if (c < 128) {
+                utftext += String.fromCharCode(c)
+            }
+            else if((c > 127) && (c < 2048)) {
+                utftext += String.fromCharCode((c >> 6) | 192)
+                utftext += String.fromCharCode((c & 63) | 128)
+            }
+            else {
+                utftext += String.fromCharCode((c >> 12) | 224)
+                utftext += String.fromCharCode(((c >> 6) & 63) | 128)
+                utftext += String.fromCharCode((c & 63) | 128)
+            }
+        }
+        return utftext
+    }
+
     export default {
         data () {
             return {
-                msg: 'Welcome to Your Vue.js App'
+                activeTab: 'website',
+                input: {
+                    text: 'https://tool.yunser.com/',
+                    wifi: {
+                        account: '',
+                        password: '',
+                        type: 'WPA'
+                    },
+                    phone: '',
+                    card: {
+                        name: '',
+                        phone: '',
+                        email: '',
+                        address: '',
+                        site: '',
+                        org: '',
+                        job: ''
+                    },
+                    src: null,
+                    stroke: 0,
+                },
+                open: false,
+                icons: [
+                    '/static/qrcode/img/qq.png',
+                    '/static/qrcode/img/phone.png',
+                    '/static/qrcode/img/sina.png',
+                    '/static/qrcode/img/taobao.png',
+                    '/static/qrcode/img/tencent-weibo.png',
+                    '/static/qrcode/img/www.png',
+                    '/static/qrcode/img/youtube.png',
+                    '/static/qrcode/img/alipay.png',
+                    '/static/qrcode/img/weixin1.png',
+                    '/static/qrcode/img/weixin2.png',
+                    '/static/qrcode/img/weibo1.png',
+                    '/static/qrcode/img/weibo2.png'
+                ],
+                page: {
+                    menu: [
+                        {
+                            type: 'icon',
+                            icon: 'all_inclusive',
+                            click: this.link,
+                            title: '在其他应用打开图片'
+                        }
+                    ]
+                }
             }
         },
         mounted() {
             this.init()
         },
         methods: {
+            upload() {
+                let _this = this
+                var $fileInput = $('<input type="file">')
+                $(document.body).append($fileInput)
+                console.log(1)
+                $fileInput.on('change', function () {
+                    if ($(this).val()) {
+                        var file = this.files[0];　　//获取拖拽文件
+                        var URL = window.URL || window.webkitURL
+                        // 通过 file 生成目标 url
+                        var imgURL = URL.createObjectURL(file)
+                        /*// 用这个 URL 产生一个 <img> 将其显示出来
+                            $('body').append($('<img/>').attr('src', imgURL))
+                            // 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
+                            // URL.revokeObjectURL(imgURL)
+                            db.loadImageFile(fileList[0])
+                            $('#open-dialog').dialog('hide');*/
+                        console.log('上传图标', imgURL)
+                        _this.input.src = imgURL
+                        // makeCode()
+                        //$('#image-selector').dialog('hide')
+
+                        //that.imageSelectCall && that.imageSelectCall(imgURL)
+                    }
+                })
+                $fileInput.hide()
+                $fileInput.trigger('click')
+            },
+            toggle () {
+                this.open = !this.open
+            },
+            handleTabChange(val) {
+                this.activeTab = val
+                this.makeCode()
+            },
+            getText() {
+                let _this = this
+                var allText
+                if (_this.activeTab === 'website') {
+                    allText = _this.input.text
+                } else if (_this.activeTab === 'wifi') {
+                    var account = _this.input.wifi.account
+                    var pwd = _this.input.wifi.password
+                    var wifiType = _this.input.wifi.type
+                    if (wifiType === 'nopass') {
+                        pwd = 'null'
+                    }
+                    allText = 'WIFI:S:' + account + ';T:' + wifiType + ';P:' + pwd + ';'
+                } else if (_this.activeTab === 'card') {
+                    var cardName = _this.input.card.name
+                    var cardSite = _this.input.card.site
+                    var cardTel = _this.input.card.phone
+                    var cardEmail = _this.input.card.email
+                    var cardAddress = _this.input.card.address
+                    var cardOrg = _this.input.card.org
+                    var cardTil = _this.input.card.job
+
+                    allText = 'MECARD:'
+                            + 'N:' + cardName + ';'
+                            + (cardTil ? ('TEL:' + cardTel + ';') : '')
+                            + (cardEmail ? ('EMAIL:' + cardEmail + ';') : '')
+                            + (cardAddress ? ('ADR:' + cardAddress + ';') : '')
+                            + ((cardSite === 'http://') ? '' : ('URL:' + cardSite + ';'))
+                            + (cardOrg ? ('ORG:' + cardOrg + ';') : '')
+                            + (cardTil ? ('TIL:' + cardTil + ';') : '')
+                    //+ 'NOTE:' + cardNote + ';'
+                    console.log(allText)
+                } else if (_this.activeTab === 'phone') {
+                    allText = 'tel:' + _this.input.phone
+                    console.log(allText)
+                }
+                return allText
+            },
+            selectIcon(icon) {
+                this.input.src = icon
+                this.open = false
+            },
+            removeIcon() {
+                this.input.src = null
+            },
             init() {
-                var size = 500;
-                var color = '#000000';
-                var bgColor = '#ffffff';
-                var gradient = null;
-                var src = null;
-                var stroke = 0; // 图标描边
+                let _this = this
+                var size = 500
+                var color = '#000000'
+                var bgColor = '#ffffff'
+                var gradient = null
                 /*var gradient = {
                  color1: '#459912',
                  color2: '#0cd9b4'
                  };*/
-                var textType = 0;
-                var type = 0;
-                var quality = 3;
-                var padding = 20;
-                var angle = 0;
-                var bgImage = null;
-                var eyeOutColor = null;
-                var eyeInColor = null;
-
-                /**
-                 *
-                 *  UTF-8 data encode / decode
-                 *  http://www.webtoolkit.info/
-                 *
-                 **/
-                function utf8Encode(string) {
-                    console.log(string)
-                    string = string.replace(/\r\n/g,'\n');
-                    var utftext = '';
-                    for (var n = 0; n < string.length; n++) {
-                        var c = string.charCodeAt(n);
-                        if (c < 128) {
-                            utftext += String.fromCharCode(c);
-                        }
-                        else if((c > 127) && (c < 2048)) {
-                            utftext += String.fromCharCode((c >> 6) | 192);
-                            utftext += String.fromCharCode((c & 63) | 128);
-                        }
-                        else {
-                            utftext += String.fromCharCode((c >> 12) | 224);
-                            utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                            utftext += String.fromCharCode((c & 63) | 128);
-                        }
-                    }
-                    return utftext;
-                }
+                var type = 0
+                var quality = 3
+                var padding = 20
+                var angle = 0
+                var bgImage = null
+                var eyeOutColor = null
+                var eyeInColor = null
 
                 function makeCode () {
-                    var allText;
-                    var elText = document.getElementById('text');
+                    // if (!_this.input.text) {
+                    //     eui.msg('请输入地址')
+                    //     // elText.focus()
+                    //     return
+                    // }
 
-                    if (textType === 0) {
-                        allText = elText.value;
-                    } else if (textType === 1) {
-                        var account = document.getElementById('wifi-account').value;
-                        var pwd = document.getElementById('wifi-pwd').value;
-                        var wifiType = document.getElementById('wifi-type').value;
-                        if (wifiType === 'nopass') {
-                            pwd = 'null';
-                        }
-                        allText = 'WIFI:S:' + account + ';T:' + wifiType + ';P:' + pwd + ';';
-                    } else if (textType === 2) {
-                        var cardName = document.getElementById('card-name').value;
-                        /*var cardQq = document.getElementById('card-qq').value;*/
-                        var cardSite = document.getElementById('card-site').value;
-                        var cardTel = document.getElementById('card-tel').value;
-                        var cardEmail = document.getElementById('card-email').value;
-                        var cardAddress = document.getElementById('card-address').value;
-                        /*var cardNote = document.getElementById('card-note').value;*/
-                        var cardOrg = document.getElementById('card-org').value;
-                        var cardTil = document.getElementById('card-til').value;
-
-                        allText = 'MECARD:'
-                                + 'N:' + cardName + ';'
-                                + (cardTil ? ('TEL:' + cardTel + ';') : '')
-                                + (cardEmail ? ('EMAIL:' + cardEmail + ';') : '')
-                                + (cardAddress ? ('ADR:' + cardAddress + ';') : '')
-                                + ((cardSite === 'http://') ? '' : ('URL:' + cardSite + ';'))
-                                + (cardOrg ? ('ORG:' + cardOrg + ';') : '')
-                                + (cardTil ? ('TIL:' + cardTil + ';') : '')
-                        //+ 'NOTE:' + cardNote + ';'
-
-                        console.log(allText)
-                    } else if (textType === 3) {
-                        var phone = document.getElementById('tel-phone').value;
-                        allText = 'tel:' + phone;
-                        console.log(allText)
-                    }
-
-                    //$('#qrcode').html('');
-                    if (!elText.value) {
-                        eui.msg('请输入地址');
-                        elText.focus();
-                        return;
-                    }
-
-                    $('#canvas').qrcode({
+                    qrcodeRender('canvas', {
                         width: size,
                         height: size,
                         background: bgColor,
@@ -381,7 +474,7 @@
                             key: 'round',
                             value: 0.2
                         },
-                        text: utf8Encode(allText),
+                        text: utf8Encode(_this.getText()),
                         ecLevel: 'L',
                         mSize: 0.1,
                         mPosX: 0.5,
@@ -394,34 +487,35 @@
                         quality: quality,
                         type: type,
                         angle: angle,
-                        src: src,
-                        stroke: stroke,
+                        src: _this.input.src,
+                        stroke: _this.input.stroke,
                         bgImage: bgImage,
                         eyeOutColor: eyeOutColor,
                         eyeInColor: eyeInColor
-                    });
+                    })
                 }
 
-                makeCode();
+                makeCode()
+                this.makeCode = makeCode
 
                 $('#color').colorpicker({}).on('changeColor', function (e) {
-                    color = e.color;
-                    makeCode();
-                });
+                    color = e.color
+                    makeCode()
+                })
                 $('#bg-color').colorpicker({}).on('changeColor', function (e) {
-                    bgColor = e.color;
-                    bgImage = null;
-                    makeCode();
-                });
+                    bgColor = e.color
+                    bgImage = null
+                    makeCode()
+                })
                 // 码眼外框颜色
                 $('#editor-eye-out-color').colorpicker({}).on('changeColor', function (e) {
-                    eyeOutColor = e.color;
-                    makeCode();
-                });
+                    eyeOutColor = e.color
+                    makeCode()
+                })
                 $('#editor-eye-in-color').colorpicker({}).on('changeColor', function (e) {
-                    eyeInColor = e.color;
-                    makeCode();
-                });
+                    eyeInColor = e.color
+                    makeCode()
+                })
 
                 $('#gradient').on('click', function () {
                     if ($(this).is(':checked')) {
@@ -429,37 +523,23 @@
                             color1: '#459912',
                             color2: '#0cd9b4'
                         }
-                        $('#gradient-box').show();
-                        $('#gradient-color1').val('#459912');
-                        $('#gradient-color2').val('#0cd9b4');
-                        makeCode();
+                        $('#gradient-box').show()
+                        $('#gradient-color1').val('#459912')
+                        $('#gradient-color2').val('#0cd9b4')
+                        makeCode()
                     } else {
-                        gradient = null;
-                        $('#gradient-box').hide();
+                        gradient = null
+                        $('#gradient-box').hide()
                     }
-                });
+                })
                 $('#gradient-color1').colorpicker({}).on('changeColor', function (e) {
-                    gradient.color1 = e.color;
-                    makeCode();
-                });
+                    gradient.color1 = e.color
+                    makeCode()
+                })
                 $('#gradient-color2').colorpicker({}).on('changeColor', function (e) {
-                    gradient.color2 = e.color;
-                    makeCode();
-                });
-
-                $('#text, #wifi-account, #wifi-pwd, #tel-phone').on('input', function () {
-                    console.log('input')
-                    makeCode();
-                });
-
-                $('#card-name, #card-tel, #card-qq, #card-email, #card-site, #card-note, #card-address, #card-org, #card-til').on('input', function () {
-                    console.log('input')
-                    makeCode();
-                });
-
-                $('#wifi-type').on('change', function () {
-                    makeCode();
-                });
+                    gradient.color2 = e.color
+                    makeCode()
+                })
 
                 $('#size').range({
                     value: size,
@@ -467,9 +547,9 @@
                     max: 800,
                     step: 100
                 }).on('slide', function (e) {
-                    size = e.value;
-                    makeCode();
-                });
+                    size = e.value
+                    makeCode()
+                })
 
                 $('#angle').range({
                     value: angle,
@@ -477,20 +557,15 @@
                     max: 360,
                     step: 1
                 }).on('slide', function (e) {
-                    angle = e.value;
-                    makeCode();
-                });
+                    angle = e.value
+                    makeCode()
+                })
 
 
                 $('#type').on('change', function () {
-                    textType = $('#type option:selected').val();
-                    makeCode();
-                });
-
-                $('#stroke').on('input', function () {
-                    stroke = parseInt(this.value);
-                    makeCode();
-                });
+                    type = $('#type option:selected').val()
+                    makeCode()
+                })
 
                 $('#padding').range({
                     value: padding,
@@ -498,14 +573,14 @@
                     max: 100,
                     step: 10
                 }).on('slide', function (e) {
-                    padding = e.value;
-                    makeCode();
-                });
+                    padding = e.value
+                    makeCode()
+                })
 
                 $('#editor-quality').on('change', function () {
-                    quality = parseInt(this.value);
-                    makeCode();
-                });
+                    quality = parseInt(this.value)
+                    makeCode()
+                })
 
 
                 $('#quality').range({
@@ -514,100 +589,136 @@
                     max: 3,
                     step: 1
                 }).on('slideStop', function (e) {
-                    quality = e.value;
-                    makeCode();
-                });
-
-                $('#sub-tab').find('a[data-toggle="tab"]').on('shown.ui.tab', function (e) {
-                    textType = $(e.target).parent().index();
-                    console.log('啦啦', textType)
-                    makeCode();
-                });
+                    quality = e.value
+                    makeCode()
+                })
 
                 $('#icon').on('click', function () {
                     $('#icon-list').dialog({
                         title: '选择图标',
                         btn: '取消'
-                    });
-                });
+                    })
+                })
 
-                $('#icon-list').on('click', 'img', function () {
-                    src = this.src;
-                    makeCode();
-                    $('#icon-list').dialog('hide');
-                });
 
                 $('#download').on('click', function () {
-                    var canvas = document.getElementById("canvas"), ctx = canvas.getContext("2d");
+                    var canvas = document.getElementById("canvas"), ctx = canvas.getContext("2d")
                     // draw to canvas...
                     canvas.toBlob(function(blob) {
-                        saveAs(blob, 'yunser.com-' + new Date().getTime() + '.png');
-                    });
-                });
+                        saveAs(blob, 'yunser.com-' + new Date().getTime() + '.png')
+                    })
+                })
 
                 $('#canvas2').on('click', function () {
-                    alert(1);
-                });
-
-                $('#upload').on('click', function () {
-                    var $fileInput = $('<input type="file">');
-                    $(document.body).append($fileInput);
-                    console.log(1);
-                    $fileInput.on('change', function () {
-                        if ($(this).val()) {
-                            var file = this.files[0];　　//获取拖拽文件
-                            var URL = window.URL || window.webkitURL;
-                            // 通过 file 生成目标 url
-                            var imgURL = URL.createObjectURL(file);
-                            /*// 用这个 URL 产生一个 <img> 将其显示出来
-                             $('body').append($('<img/>').attr('src', imgURL));
-                             // 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
-                             // URL.revokeObjectURL(imgURL);
-                             db.loadImageFile(fileList[0]);
-                             $('#open-dialog').dialog('hide');*/
-                            src = imgURL;
-                            makeCode();
-                            //$('#image-selector').dialog('hide');
-
-                            //that.imageSelectCall && that.imageSelectCall(imgURL);
-                        }
-                    });
-                    $fileInput.hide();
-                    $fileInput.trigger('click');
-                });
-
+                    alert(1)
+                })
 
                 $('#upload-bg').on('click', function () {
-                    var $fileInput = $('<input type="file">');
-                    $(document.body).append($fileInput);
-                    console.log(1);
+                    var $fileInput = $('<input type="file">')
+                    $(document.body).append($fileInput)
+                    console.log(1)
                     $fileInput.on('change', function () {
                         if ($(this).val()) {
-                            var file = this.files[0];　　//获取拖拽文件
-                            var URL = window.URL || window.webkitURL;
-                            // 通过 file 生成目标 url
-                            var imgURL = URL.createObjectURL(file);
-                            /*// 用这个 URL 产生一个 <img> 将其显示出来
-                             $('body').append($('<img/>').attr('src', imgURL));
-                             // 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
-                             // URL.revokeObjectURL(imgURL);
-                             db.loadImageFile(fileList[0]);
-                             $('#open-dialog').dialog('hide');*/
-                            bgImage = imgURL;
-                            makeCode();
-                            //$('#image-selector').dialog('hide');
-
-                            //that.imageSelectCall && that.imageSelectCall(imgURL);
+                            var file = this.files[0]
+                            var URL = window.URL || window.webkitURL
+                            var imgURL = URL.createObjectURL(file)
+                            bgImage = imgURL
+                            makeCode()
                         }
-                    });
-                    $fileInput.hide();
-                    $fileInput.trigger('click');
-                });
+                    })
+                    $fileInput.hide()
+                    $fileInput.trigger('click')
+                })
+
+                this.initWebIntents()
+            },
+            initWebIntents() {
+                if (!window.intent) {
+                    return
+                }
+                this.page.menu.push({
+                    type: 'icon',
+                    icon: 'check',
+                    click: this.finish,
+                    title: '完成'
+                })
+            },
+            finish() {
+                let canvas = document.getElementById("canvas")
+                let dataUrl = canvas.toDataURL('image/png', 1)
+                window.intent.postResult(dataUrl, {
+                    fileName: this.fileName || 'yunser.com-' + new Date().getTime() + '.png'
+                })
+                setTimeout(() => {
+                    let owner = window.opener || window.parent
+                    owner.window.close()
+                }, 100)
+            },
+            link() {
+                console.log('2121')
+                let canvas = document.getElementById("canvas")
+                let dataUrl = canvas.toDataURL('image/png', 1)
+                let intent = new Intent({
+                    action: 'http://webintent.yunser.com/?',
+                    type: 'image/*',
+                    data: dataUrl,
+                    extras: {
+                        fileName: this.fileName || 'yunser.com-' + new Date().getTime() + '.png'
+                    }
+                })
+                navigator.startActivity(intent, (data, extras) => {
+                    console.log('成功', data, extras)
+                    // this.editor.setValue(data)
+                    // if (extras && extras.fileName) {
+                    //     this.fileName = extras.fileName
+                    // }
+                }, data => {
+                    console.log('失败')
+                })
+            },
+            linkImage() {
+                let intent = new Intent({
+                    action: 'http://webintent.yunser.com/?',
+                    type: 'image/*'
+                })
+                navigator.startActivity(intent, (data, extras) => {
+                    console.log('成功', data, extras)
+                    this.input.src = data
+                    // this.editor.setValue(data)
+                    // if (extras && extras.fileName) {
+                    //     this.fileName = extras.fileName
+                    // }
+                }, data => {
+                    console.log('失败')
+                })
+            }
+        },
+        watch: {
+            input: {
+                deep: true,
+                handler() {
+                    this.makeCode()
+                }
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.tab-head {
+    margin-bottom: 16px;
+}
+.icon-box {
+    width: 100%;
+    max-width: 400px;
+    .body {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 16px;
+        overflow: auto;
+    }
+}
 </style>
