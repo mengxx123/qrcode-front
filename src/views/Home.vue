@@ -14,94 +14,96 @@
             </div>
         </div>
         <div class="edit-tool">
-            <ul id="tool-tab" class="nav nav-tabs">
-                <div class="nav-item active"><a class="nav-link" href="#tab10" data-toggle="tab">内容</a></div>
-                <div class="nav-item"><a class="nav-link" href="#tab11" data-toggle="tab">基本</a></div>
-                <div class="nav-item"><a class="nav-link" href="#tab12" data-toggle="tab">样式</a></div>
-                <div class="nav-item"><a class="nav-link" href="#tab13" data-toggle="tab">图标</a></div>
-                <div class="nav-item"><a class="nav-link" href="#tab14" data-toggle="tab">码眼</a></div>
-            </ul>
-            <div class="tab-content">
-                <div id="tab10" class="tab-pane fade active in">
-
+            <ui-tabs class="tab-head" :value="activeTab" @change="handleTabChange">
+                <ui-tab value="1" title="内容"/>
+                <ui-tab value="2" title="基本"/>
+                <ui-tab value="3" title="样式"/>
+                <ui-tab value="4" title="图标"/>
+                <ui-tab value="5" title="码眼"/>
+            </ui-tabs>
+            <div class="ui-tab-content">
+                <div v-if="activeTab === '1'" class="ui-tab-pane">
+                    <div class="ui-form-item">
+                        <label class="ui-form-label">类型</label>
+                        <ui-select-field class="form-select" v-model="input.contentType">
+                            <ui-menu-item value="website" title="网址"/>
+                            <ui-menu-item value="wifi" title="WiFi"/>
+                            <ui-menu-item value="card" title="名片"/>
+                            <ui-menu-item value="phone" title="电话"/>
+                        </ui-select-field>
+                    </div>
                     <div id="editor-text-edit2" class="editor-box editor-text-ediotr-box">
-                        <ui-tabs class="tab-head" :value="activeTab" @change="handleTabChange">
-                            <ui-tab value="website" title="网址"/>
-                            <ui-tab value="wifi" title="WiFi"/>
-                            <ui-tab value="card" title="名片"/>
-                            <ui-tab value="phone" title="电话"/>
-                        </ui-tabs>
-                        <div v-if="activeTab === 'website'">
+                        <div v-if="input.contentType === 'website'">
                             <div class="form-horizontal">
-                                <div class="form-groups">
-                                    <div class="form-group">
-                                        <label class="control-label">网址</label>
-                                        <textarea v-model="input.text" class="form-control" placeholder="支持文本、网址和电子邮箱"></textarea>
+                                <div class="ui-form-items">
+                                    <div class="ui-form-item">
+                                        <label class="ui-form-label">网址</label>
+                                        <ui-text-field class="ui-form-widget form-text-field" v-model="input.text" hintText="支持文本、网址和电子邮箱" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div v-if="activeTab === 'wifi'">
+                        <div v-if="input.contentType === 'wifi'">
                             <div class="form-horizontal">
-                                <div class="form-groups">
-                                    <div class="form-group">
-                                        <label class="control-label">WiFi账号</label>
-                                        <textarea v-model="input.wifi.account" class="form-control" placeholder="接入点SSID"></textarea>
+                                <div class="ui-form-items">
+                                    <div class="ui-form-item">
+                                        <label class="ui-form-label">WiFi账号</label>
+                                        <ui-text-field class="ui-form-widget form-text-field" v-model="input.wifi.account" hintText="接入点 SSID" />
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label">密码</label>
-                                        <input v-model="input.wifi.password" class="form-control" type="text">
+                                    <div class="ui-form-item">
+                                        <label class="ui-form-label">密码</label>
+                                        <ui-text-field class="ui-form-widget form-text-field" v-model="input.wifi.password" />
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label">加密类型</label>
-                                        <select v-model="input.wifi.type" class="form-control">
-                                            <option value="WPA">WPA/WPA2</option>
-                                            <option value="WEP">WEP</option>
-                                            <option value="nopass">无加密</option>
-                                        </select>
+                                    <div class="ui-form-item">
+                                        <label class="ui-form-label">加密类型</label>
+                                        <ui-select-field class="ui-form-widget form-select" v-model="input.wifi.type">
+                                            <ui-menu-item value="WPA" title="WPA/WPA2"/>
+                                            <ui-menu-item value="WEP" title="WEP"/>
+                                            <ui-menu-item value="nopass" title="无加密"/>
+                                        </ui-select-field>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div v-if="activeTab === 'card'">
+                        <div v-if="input.contentType === 'card'">
                             <div class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="control-label">姓名</label>
-                                    <input v-model="input.card.name" class="form-control" type="text">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">姓名</label>
+                                    <ui-text-field class="ui-form-widget form-text-field" v-model="input.card.name" />
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">电话</label>
-                                    <input v-model="input.card.phone" class="form-control" type="text">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">电话</label>
+                                    <ui-text-field class="ui-form-widget form-text-field" v-model="input.card.phone" />
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">电子邮箱</label>
-                                    <input v-model="input.card.email" class="form-control" type="text">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">电子邮箱</label>
+                                    <ui-text-field class="ui-form-widget form-text-field" v-model="input.card.email" />
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">地址</label>
-                                    <input v-model="input.card.address" class="form-control" type="text" value="">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">地址</label>
+                                    <ui-text-field class="ui-form-widget form-text-field" v-model="input.card.address" />
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">网址</label>
-                                    <input v-model="input.card.site" class="form-control" type="text" value="http://">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">网址</label>
+                                    <ui-text-field class="ui-form-widget form-text-field" v-model="input.card.site" />
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label">单位</label>
-                                    <input v-model="input.card.org" class="form-control" type="text" value="">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">单位</label>
+                                    <ui-text-field class="ui-form-widget form-text-field" v-model="input.card.org" />
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">职位</label>
-                                    <input v-model="input.card.job" class="form-control" type="text" value="">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">职位</label>
+                                    <ui-text-field class="ui-form-widget form-text-field" v-model="input.card.job" />
                                 </div>
                             </div>
                         </div>
-                        <div v-if="activeTab === 'phone'">
+                        <div v-if="input.contentType === 'phone'">
                             <div class="form-horizontal">
-                                <div class="form-groups">
-                                    <div class="form-group">
-                                        <label class="control-label">手机号码</label>
-                                        <input v-model="input.phone" class="form-control" type="text">
+                                <div class="ui-form-items">
+                                    <div class="ui-form-item">
+                                        <label class="ui-form-label">手机号码</label>
+                                        <ui-text-field class="ui-form-widget form-text-field" v-model="input.phone" />
                                     </div>
                                 </div>
                             </div>
@@ -128,88 +130,84 @@
                         </div> -->
                     </div>
                 </div>
-                <div id="tab11" class="tab-pane fade">
+                <div v-if="activeTab === '2'" class="ui-tab-pane">
                     <div class="form-horizontal">
                         <div id="editor-text-edit2" class="editor-box editor-text-ediotr-box">
-                            <div class="form-groups">
+                            <div class="ui-form-items">
                                 <h4 class="title">基本设置</h4>
-                                <div class="form-group">
-                                    <label class="control-label"></label>
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">大小</label>
+                                    <ui-slider class="form-slider" v-model="input.size" :min="100" :max="800" :step="100"/>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">大小</label>
-                                    <!-- <ui-slider class="demo-slider" v-model="value1"/> -->
-                                    <div id="size"></div>
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">容错</label>
+                                    <ui-select-field class="form-select" v-model="input.quality">
+                                        <ui-menu-item :value="0" title="最低"/>
+                                        <ui-menu-item :value="1" title="低"/>
+                                        <ui-menu-item :value="2" title="中"/>
+                                        <ui-menu-item :value="3" title="高"/>
+                                    </ui-select-field>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">容错</label>
-                                    <!--<div id="quality"></div>-->
-                                    <select id="editor-quality" class="form-control">
-                                        <option value="0">最低</option>
-                                        <option value="1">低</option>
-                                        <option value="2">中</option>
-                                        <option value="3" selected>高</option>
-                                    </select>
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">边距</label>
+                                    <ui-slider class="form-slider" v-model="input.padding" :min="0" :max="100" :step="10"/>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">边距</label>
-                                    <div id="padding"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">旋转</label>
-                                    <div id="angle"></div>
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">旋转</label>
+                                    <ui-slider class="form-slider" v-model="input.angle" :min="0" :max="360" :step="1"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="tab12" class="tab-pane fade">
+                <div v-if="activeTab === '3'" class="ui-tab-pane">
                     <div class="form-horizontal">
-                        <div class="form-groups">
+                        <div class="ui-form-items">
                             <h4 class="title">填充</h4>
-                            <div class="form-group">
-                                <label class="control-label">样式</label>
-                                <select id="type" class="form-control">
-                                    <option value="0" selected>直角</option>
-                                    <option value="1">圆圈</option>
-                                    <option value="2">液化</option>
-                                </select>
+                            <div class="ui-form-item">
+                                <label class="ui-form-label">样式</label>
+                                <ui-select-field class="form-select" v-model="input.type">
+                                    <ui-menu-item :value="0" title="直角"/>
+                                    <ui-menu-item :value="1" title="圆圈"/>
+                                    <ui-menu-item :value="2" title="液化"/>
+                                </ui-select-field>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">颜色</label>
-                                <input id="color" class="form-control">
+                            <div class="ui-form-item">
+                                <label class="ui-form-label">颜色</label>
+                                <ui-color-picker class="form-color-picker" v-model="input.color" />
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">渐变</label>
-                                <label class="checkbox-inline"><input id="gradient" type="checkbox">开启</label>
+                            <div class="ui-form-item">
+                                <label class="ui-form-label">渐变</label>
+                                <ui-checkbox class="ui-form-checkbox" v-model="input.isGradient" label=""/>
                             </div>
-                            <div id="gradient-box" class="gradient-box">
-                                <div class="form-group">
-                                    <label class="control-label">渐变方式</label>
-                                    <div class="form-control-static">线性渐变</div>
+                            <div v-if="input.isGradient">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">渐变方式</label>
+                                    <div class="ui-form-widget-static">线性渐变</div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">颜色1</label>
-                                    <input id="gradient-color1" class="form-control">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">颜色1</label>
+                                    <ui-color-picker class="form-color-picker" v-model="input.gradientColor1" />
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">颜色2</label>
-                                    <input id="gradient-color2" class="form-control">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">颜色2</label>
+                                    <ui-color-picker class="form-color-picker" v-model="input.gradientColor2" />
                                 </div>
                             </div>
                         </div>
-                        <div class="form-groups">
+                        <div class="ui-form-items">
                             <h4 class="title">背景</h4>
-                            <div class="form-group">
-                                <label class="control-label">背景色</label>
-                                <input id="bg-color" class="form-control">
+                            <div class="ui-form-item">
+                                <label class="ui-form-label">背景色</label>
+                                <ui-color-picker class="form-color-picker" v-model="input.bgColor" />
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">背景图片</label>
-                                <button id="upload-bg" class="btn btn-default" type="button">上传</button>
+                            <div class="ui-form-item">
+                                <label class="ui-form-label">背景图片</label>
+                                <ui-raised-button label="上传" @click="uploadBgImage" /> 
+                                <ui-raised-button label="删除" @click="input.bgImage = null" v-if="input.bgImage" style="margin-left: 8px;" /> 
                             </div>
                         </div>
-                        <div class="form-groups">
+                        <div class="ui-form-items">
                             <h4 class="title">模板</h4>
                             <ul id="style-list" class="style-list">
                                 <li class="style-item"></li>
@@ -217,42 +215,42 @@
                         </div>
                     </div>
                 </div>
-                <div id="tab13" class="tab-pane fade">
+                <div v-if="activeTab === '4'" class="ui-tab-pane">
                     <ul id="index-list" class="index-list">
                         <div class="form-horizontal">
-                            <div class="form-groups">
+                            <div class="ui-form-items">
                                 <h4 class="title">图标</h4>
-                                <div class="form-group">
-                                    <label class="control-label">图标</label>
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">图标</label>
                                     <ui-raised-button label="选择图标" @click="toggle" /> 
                                     <ui-raised-button label="删除图标" @click="removeIcon" v-if="input.src" /> 
                                 </div>
                             </div>
-                            <div class="form-groups" v-if="input.src">
+                            <div class="ui-form-items" v-if="input.src">
                                 <h4 class="title">图标样式</h4>
-                                <div class="form-group">
-                                    <label class="control-label">描边</label>
-                                    <input v-model.number="input.stroke" class="form-control" type="number" value="0" min="0">
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">描边</label>
+                                    <input v-model.number="input.stroke" class="ui-form-widget" type="number" value="0" min="0">
                                 </div>
                             </div>
                         </div>
                     </ul>
                 </div>
-                <div id="tab14" class="tab-pane fade">
+                <div v-if="activeTab === '5'" class="ui-tab-pane">
                     <div class="form-horizontal">
-                        <div class="form-groups">
+                        <div class="ui-form-items">
                             <h4 class="title">颜色</h4>
-                            <div class="form-group">
-                                <label class="control-label">外框颜色</label>
-                                <input id="editor-eye-out-color" class="form-control">
+                            <div class="ui-form-item">
+                                <label class="ui-form-label">外框颜色</label>
+                                <ui-color-picker class="form-color-picker" v-model="input.eyeOutColor" />
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">内框颜色</label>
-                                <input id="editor-eye-in-color" class="form-control">
+                            <div class="ui-form-item">
+                                <label class="ui-form-label">内框颜色</label>
+                                <ui-color-picker class="form-color-picker" v-model="input.eyeInColor" />
                             </div>
                         </div>
                     </div>
-                </div><!-- /.tab-pane -->
+                </div>
             </div>
         </div>
         <ui-drawer class="icon-box" right :open="open" :docked="false" @close="toggle()">
@@ -307,8 +305,9 @@
     export default {
         data () {
             return {
-                activeTab: 'website',
+                activeTab: '1',
                 input: {
+                    contentType: 'website',
                     text: 'https://tool.yunser.com/',
                     wifi: {
                         account: '',
@@ -321,12 +320,26 @@
                         phone: '',
                         email: '',
                         address: '',
+                        // site: 'http://',
                         site: '',
                         org: '',
                         job: ''
                     },
+                    type: 0,
+                    size: 500,
+                    padding: 20,
+                    angle: 0,
+                    quality: 3,
                     src: null,
                     stroke: 0,
+                    color: '#000',
+                    bgImage: null,
+                    eyeOutColor: null, // 码眼外框颜色
+                    eyeInColor: null,
+                    bgColor: '#fff',
+                    isGradient: false,
+                    gradientColor1: '#459912',
+                    gradientColor2: '#0cd9b4'
                 },
                 open: false,
                 icons: [
@@ -359,6 +372,23 @@
             this.init()
         },
         methods: {
+            uploadBgImage() {
+                let _this = this
+                var $fileInput = $('<input type="file">')
+                $(document.body).append($fileInput)
+                console.log(1)
+                $fileInput.on('change', function () {
+                    if ($(this).val()) {
+                        var file = this.files[0]
+                        var URL = window.URL || window.webkitURL
+                        var imgURL = URL.createObjectURL(file)
+                        _this.input.bgImage = imgURL
+                        _this.makeCode()
+                    }
+                })
+                $fileInput.hide()
+                $fileInput.trigger('click')
+            },
             upload() {
                 let _this = this
                 var $fileInput = $('<input type="file">')
@@ -392,14 +422,13 @@
             },
             handleTabChange(val) {
                 this.activeTab = val
-                this.makeCode()
             },
             getText() {
                 let _this = this
                 var allText
-                if (_this.activeTab === 'website') {
+                if (_this.input.contentType === 'website') {
                     allText = _this.input.text
-                } else if (_this.activeTab === 'wifi') {
+                } else if (_this.input.contentType === 'wifi') {
                     var account = _this.input.wifi.account
                     var pwd = _this.input.wifi.password
                     var wifiType = _this.input.wifi.type
@@ -407,7 +436,7 @@
                         pwd = 'null'
                     }
                     allText = 'WIFI:S:' + account + ';T:' + wifiType + ';P:' + pwd + ';'
-                } else if (_this.activeTab === 'card') {
+                } else if (_this.input.contentType === 'card') {
                     var cardName = _this.input.card.name
                     var cardSite = _this.input.card.site
                     var cardTel = _this.input.card.phone
@@ -426,7 +455,7 @@
                             + (cardTil ? ('TIL:' + cardTil + ';') : '')
                     //+ 'NOTE:' + cardNote + ';'
                     console.log(allText)
-                } else if (_this.activeTab === 'phone') {
+                } else if (_this.input.contentType === 'phone') {
                     allText = 'tel:' + _this.input.phone
                     console.log(allText)
                 }
@@ -440,197 +469,61 @@
                 this.input.src = null
             },
             init() {
+                // TODO 删除背景图片已经背景颜色冲突
+                this.makeCode()
+                this.initWebIntents()
+            },
+            makeCode() {
                 let _this = this
-                var size = 500
-                var color = '#000000'
-                var bgColor = '#ffffff'
-                var gradient = null
-                /*var gradient = {
-                 color1: '#459912',
-                 color2: '#0cd9b4'
-                 };*/
-                var type = 0
-                var quality = 3
-                var padding = 20
-                var angle = 0
-                var bgImage = null
-                var eyeOutColor = null
-                var eyeInColor = null
-
-                function makeCode () {
-                    // if (!_this.input.text) {
-                    //     eui.msg('请输入地址')
-                    //     // elText.focus()
-                    //     return
-                    // }
-
-                    qrcodeRender('canvas', {
-                        width: size,
-                        height: size,
-                        background: bgColor,
-                        foreground: color,
-                        cellSize: 8, //2-10
-                        effect: {
-                            key: 'round',
-                            value: 0.2
-                        },
-                        text: utf8Encode(_this.getText()),
-                        ecLevel: 'L',
-                        mSize: 0.1,
-                        mPosX: 0.5,
-                        mPosY: 0.5,
-                        label: 'no label',
-                        fontname: 'sans',
-                        fontcolor: '#FFF',
-                        gradient: gradient,
-                        padding: padding,
-                        quality: quality,
-                        type: type,
-                        angle: angle,
-                        src: _this.input.src,
-                        stroke: _this.input.stroke,
-                        bgImage: bgImage,
-                        eyeOutColor: eyeOutColor,
-                        eyeInColor: eyeInColor
-                    })
+                // if (!_this.input.text) {
+                //     eui.msg('请输入地址')
+                //     // elText.focus()
+                //     return
+                // }
+                let gradient = null
+                if (_this.input.isGradient) {
+                    gradient = {
+                        color1: _this.input.gradientColor1,
+                        color2: _this.input.gradientColor2
+                    }
                 }
 
-                makeCode()
-                this.makeCode = makeCode
-
-                $('#color').colorpicker({}).on('changeColor', function (e) {
-                    color = e.color
-                    makeCode()
+                qrcodeRender('canvas', {
+                    width: _this.input.size,
+                    height: _this.input.size,
+                    background: _this.input.bgColor,
+                    foreground: _this.input.color,
+                    cellSize: 8, //2-10
+                    effect: {
+                        key: 'round',
+                        value: 0.2
+                    },
+                    text: utf8Encode(_this.getText()),
+                    ecLevel: 'L',
+                    mSize: 0.1,
+                    mPosX: 0.5,
+                    mPosY: 0.5,
+                    label: 'no label',
+                    fontname: 'sans',
+                    fontcolor: '#FFF',
+                    gradient: gradient,
+                    padding: _this.input.padding,
+                    quality: _this.input.quality,
+                    type: _this.input.type,
+                    angle: _this.input.angle,
+                    src: _this.input.src,
+                    stroke: _this.input.stroke,
+                    bgImage: _this.input.bgImage,
+                    eyeOutColor: _this.input.eyeOutColor,
+                    eyeInColor: _this.input.eyeInColor
                 })
-                $('#bg-color').colorpicker({}).on('changeColor', function (e) {
-                    bgColor = e.color
-                    bgImage = null
-                    makeCode()
+            },
+            download() {
+                var canvas = document.getElementById("canvas"), ctx = canvas.getContext("2d")
+                // draw to canvas...
+                canvas.toBlob(function(blob) {
+                    saveAs(blob, 'yunser.com-' + new Date().getTime() + '.png')
                 })
-                // 码眼外框颜色
-                $('#editor-eye-out-color').colorpicker({}).on('changeColor', function (e) {
-                    eyeOutColor = e.color
-                    makeCode()
-                })
-                $('#editor-eye-in-color').colorpicker({}).on('changeColor', function (e) {
-                    eyeInColor = e.color
-                    makeCode()
-                })
-
-                $('#gradient').on('click', function () {
-                    if ($(this).is(':checked')) {
-                        gradient = {
-                            color1: '#459912',
-                            color2: '#0cd9b4'
-                        }
-                        $('#gradient-box').show()
-                        $('#gradient-color1').val('#459912')
-                        $('#gradient-color2').val('#0cd9b4')
-                        makeCode()
-                    } else {
-                        gradient = null
-                        $('#gradient-box').hide()
-                    }
-                })
-                $('#gradient-color1').colorpicker({}).on('changeColor', function (e) {
-                    gradient.color1 = e.color
-                    makeCode()
-                })
-                $('#gradient-color2').colorpicker({}).on('changeColor', function (e) {
-                    gradient.color2 = e.color
-                    makeCode()
-                })
-
-                $('#size').range({
-                    value: size,
-                    min: 200,
-                    max: 800,
-                    step: 100
-                }).on('slide', function (e) {
-                    size = e.value
-                    makeCode()
-                })
-
-                $('#angle').range({
-                    value: angle,
-                    min: 0,
-                    max: 360,
-                    step: 1
-                }).on('slide', function (e) {
-                    angle = e.value
-                    makeCode()
-                })
-
-
-                $('#type').on('change', function () {
-                    type = $('#type option:selected').val()
-                    makeCode()
-                })
-
-                $('#padding').range({
-                    value: padding,
-                    min: 0,
-                    max: 100,
-                    step: 10
-                }).on('slide', function (e) {
-                    padding = e.value
-                    makeCode()
-                })
-
-                $('#editor-quality').on('change', function () {
-                    quality = parseInt(this.value)
-                    makeCode()
-                })
-
-
-                $('#quality').range({
-                    value: quality,
-                    min: 0,
-                    max: 3,
-                    step: 1
-                }).on('slideStop', function (e) {
-                    quality = e.value
-                    makeCode()
-                })
-
-                $('#icon').on('click', function () {
-                    $('#icon-list').dialog({
-                        title: '选择图标',
-                        btn: '取消'
-                    })
-                })
-
-
-                $('#download').on('click', function () {
-                    var canvas = document.getElementById("canvas"), ctx = canvas.getContext("2d")
-                    // draw to canvas...
-                    canvas.toBlob(function(blob) {
-                        saveAs(blob, 'yunser.com-' + new Date().getTime() + '.png')
-                    })
-                })
-
-                $('#canvas2').on('click', function () {
-                    alert(1)
-                })
-
-                $('#upload-bg').on('click', function () {
-                    var $fileInput = $('<input type="file">')
-                    $(document.body).append($fileInput)
-                    console.log(1)
-                    $fileInput.on('change', function () {
-                        if ($(this).val()) {
-                            var file = this.files[0]
-                            var URL = window.URL || window.webkitURL
-                            var imgURL = URL.createObjectURL(file)
-                            bgImage = imgURL
-                            makeCode()
-                        }
-                    })
-                    $fileInput.hide()
-                    $fileInput.trigger('click')
-                })
-
-                this.initWebIntents()
             },
             initWebIntents() {
                 if (!window.intent) {
@@ -721,4 +614,5 @@
         overflow: auto;
     }
 }
+
 </style>
