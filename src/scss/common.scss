@@ -261,11 +261,28 @@ html {
     overflow: auto;
     canvas {
         display: block;
+        max-width: 200px;
+        // max-width: 200px;
         margin: 0 auto;
         // position: absolute;
         // left: 0;
         // top: 0;
         border: 1px solid #ccc;
+    }
+}
+@media all and (max-width: 660px) {
+    .qrcode-box {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+    }
+    .edit-tool {
+        left: 0;
+        right: 0;
+        width: auto !important;
     }
 }
 #canvas2 {

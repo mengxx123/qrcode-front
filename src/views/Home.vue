@@ -7,7 +7,7 @@
                             <!--<a class="nav-link" href="/qrcode/game" target="_blank" style="color: #f00">二维码小游戏</a>-->
                             <!--<a class="nav-link" href="/plugin/qrcode" target="_blank" style="color: #f00">浏览器插件</a>-->
         <!--</header>-->
-        <div class="qrcode-box">
+        <div class="qrcode-box" v-if="screenWidth >= 660 || activeTab === '5'">
             <div id="qrcode" class="qrcode">
                 <canvas id="canvas" width="500" height="500"></canvas>
                 <canvas id="canvas2" width="500" height="500"></canvas>
@@ -18,8 +18,8 @@
                 <ui-tab value="1" title="内容"/>
                 <ui-tab value="2" title="基本"/>
                 <ui-tab value="3" title="样式"/>
-                <ui-tab value="4" title="图标"/>
-                <ui-tab value="5" title="码眼"/>
+                <ui-tab value="4" title="高级"/>
+                <ui-tab value="5" title="预览" v-if="screenWidth < 660" />
             </ui-tabs>
             <div class="ui-tab-content">
                 <div v-if="activeTab === '1'" class="ui-tab-pane">
@@ -234,22 +234,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-horizontal">
+                            <div class="ui-form-items">
+                                <h4 class="title">码眼</h4>
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">外框颜色</label>
+                                    <ui-color-picker class="form-color-picker" v-model="input.eyeOutColor" />
+                                </div>
+                                <div class="ui-form-item">
+                                    <label class="ui-form-label">内框颜色</label>
+                                    <ui-color-picker class="form-color-picker" v-model="input.eyeInColor" />
+                                </div>
+                            </div>
+                        </div>
                     </ul>
                 </div>
                 <div v-if="activeTab === '5'" class="ui-tab-pane">
-                    <div class="form-horizontal">
-                        <div class="ui-form-items">
-                            <h4 class="title">颜色</h4>
-                            <div class="ui-form-item">
-                                <label class="ui-form-label">外框颜色</label>
-                                <ui-color-picker class="form-color-picker" v-model="input.eyeOutColor" />
-                            </div>
-                            <div class="ui-form-item">
-                                <label class="ui-form-label">内框颜色</label>
-                                <ui-color-picker class="form-color-picker" v-model="input.eyeInColor" />
-                            </div>
+                    <!-- <div class="qrcode-box">
+                        <div id="qrcode" class="qrcode">
+                            <canvas id="canvas" width="500" height="500"></canvas>
+                            <canvas id="canvas2" width="500" height="500"></canvas>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -305,6 +311,7 @@
     export default {
         data () {
             return {
+                screenWidth: 0,
                 activeTab: '1',
                 input: {
                     contentType: 'website',
@@ -370,6 +377,13 @@
         },
         mounted() {
             this.init()
+            window.addEventListener('resize', this.onResize = () => {
+                this.screenWidth = window.innerWidth
+            }, false)
+            this.onResize()
+        },
+        destroyed() {
+            window.removeEventListener('resize', this.onResize) 
         },
         methods: {
             uploadBgImage() {
@@ -488,6 +502,12 @@
                     }
                 }
 
+                let canvas = document.getElementById('canvas')
+                if (!canvas) {
+                    return
+                }
+                console.log('渲染')
+
                 qrcodeRender('canvas', {
                     width: _this.input.size,
                     height: _this.input.size,
@@ -591,6 +611,13 @@
                 deep: true,
                 handler() {
                     this.makeCode()
+                }
+            },
+            activeTab() {
+                if (this.activeTab === '5') {
+                    this.$nextTick(() => {
+                        this.makeCode()
+                    })
                 }
             }
         }
