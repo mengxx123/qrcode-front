@@ -1,5 +1,12 @@
 @import './var';
 @import './color';
+.ui-page-body {
+    -webkit-overflow-scrolling : touch;
+}
+input,
+textarea {
+  -webkit-appearance: none;
+}
 
 .mu-tabs {
     background-color: #fff;
