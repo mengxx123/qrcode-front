@@ -5,7 +5,6 @@ import Home from '@/views/Home'
 import V1 from '@/views/V1'
 import V2 from '@/views/V2'
 import Extension from '@/views/Extension'
-import Recognition from '@/views/Recognition'
 
 Vue.use(Router)
 
@@ -26,10 +25,6 @@ let routes = [
         path: '/extension',
         component: Extension
     },
-    {
-        path: '/recognition',
-        component: Recognition
-    }
 ]
 
 export default new Router({

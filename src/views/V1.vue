@@ -315,7 +315,7 @@
                 activeTab: '1',
                 input: {
                     contentType: 'website',
-                    text: 'https://tool.yunser.com/',
+                    text: '',
                     wifi: {
                         account: '',
                         password: '',

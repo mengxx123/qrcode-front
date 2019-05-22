@@ -1,12 +1,23 @@
 @import './var';
 @import './color';
-.ui-page-body {
-    -webkit-overflow-scrolling : touch;
+
+.common-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px 16px 80px 16px;
 }
-input,
-textarea {
-  -webkit-appearance: none;
+.yui-page-side {
+    z-index: 1000000;
+    background-color: #fff;
 }
+
+// .ui-page-body {
+//     -webkit-overflow-scrolling : touch;
+// }
+// input,
+// textarea {
+//   -webkit-appearance: none;
+// }
 
 .mu-tabs {
     background-color: #fff;
@@ -320,7 +331,7 @@ html {
 /* 工具栏 */
 .edit-tool {
     position: absolute;
-    top: 0;
+    top: 64px;
     right: 0;
     bottom: 0;
     width: 360px;
