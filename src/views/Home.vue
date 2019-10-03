@@ -62,6 +62,14 @@
                                 name: '二维码识别',
                                 desc: '',
                                 icon: '/static/img/qrcode.svg',
+                                to: 'xxx',
+                                href: 'https://qrcodeex.yunser.com/recognition',
+                                target: '_blank'
+                            },
+                            {
+                                name: '二维码识别',
+                                desc: '',
+                                icon: '/static/img/qrcode.svg',
                                 to: '/recognition'
                             },
                             {
